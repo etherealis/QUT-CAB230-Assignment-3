@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
-const crypto = require('crypto')
+const crypto = require('crypto');
+const { auth } = require('./auth');
 
 /** ==============================
  * Users router request validation
@@ -273,7 +274,7 @@ const get_volcano_details = (req, res, next) => {
                 message: "Volcano with ID: " + volcano_id + " not found."
             })
 
-            req.data = result
+            req.data = result[0]
             return next()
         })
         .catch((err) => {
@@ -293,7 +294,7 @@ const get_volcano_details = (req, res, next) => {
                 message: "Volcano with ID: " + volcano_id + " not found."
             })
 
-            req.data = result
+            req.data = result[0]
             return next()
         })
         .catch((err) => {

@@ -11,6 +11,7 @@ const input_validate = validations => {
     if (errors.isEmpty()) {
       return next();
     } 
+    
     res.status(400).json({ 
         error: true, 
         message: "Request body has invalid parameters or is incomplete."

@@ -36,12 +36,15 @@ router.post('/login',
 router.post('/register',  
   input_validate([
     body('email').notEmpty(),
-    body('email').isEmail(),
+    body('email').isEmail({
+      require_tld: false, 
+      ignore_max_length: true, 
+    }),
     body('password').notEmpty()
   ]),
   post_register,
   (req, res, next) => {
-    res.status(201).json({ message: "User created" })
+    res.status(201).json({message: "Created"})
 });
 
 router.get('/:email/profile',  
@@ -60,7 +63,7 @@ router.put('/:email/profile',
   required_auth,  
   put_profile,
   (req, res, next) => {
-    res.status(200).json(req.body)
+    res.status(200).send(req.body)
   }
 )
 

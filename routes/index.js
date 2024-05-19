@@ -21,7 +21,7 @@ router.get("/volcanoes",
     res.status(200).json(req.data)
 });
 
-router.get("/volcanoes/:id", 
+router.get("/volcano/:id", 
   input_validate([
     param('id').notEmpty(),
     param('id').isInt()
@@ -32,7 +32,7 @@ router.get("/volcanoes/:id",
     res.status(200).json(req.data)
 });
 
-router.post("/volcanoes/:id", 
+router.post("/volcano/:id", 
   input_validate([
     param('id').notEmpty(),
     param('id').isInt()

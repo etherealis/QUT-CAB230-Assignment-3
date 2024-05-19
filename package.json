@@ -1,12 +1,13 @@
 {
   "name": "assignment3",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.6",
+    "cors": "^2.8.5",
     "debug": "~4.3.4",
     "dotenv": "^16.4.5",
     "express": "~4.19.2",

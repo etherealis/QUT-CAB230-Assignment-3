@@ -448,7 +448,117 @@
         }
       }
     },
-    "/volcanoes/{id}": {
+    "/volcanoes/tallest/{country}": {
+      "get": {
+        "tags": ["Data"],
+        "description": "Returns details of the tallest volcano in a specified country. If the user is authenticated, additional details of the volcano will also be included in the response.",
+        "parameters": [
+          {
+            "name": "country",
+            "in": "path",
+            "description": "Name of country",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A volcano object with all its related information.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 423
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Heard"
+                    },
+                    "country": {
+                      "type": "string",
+                      "example": "Australia"
+                    },
+                    "region": {
+                      "type": "string",
+                      "example": "Middle East and Indian Ocean"
+                    },
+                    "subregion": {
+                      "type": "string",
+                      "example": "Indian Ocean (southern)"
+                    },
+                    "last_eruption": {
+                      "type": "string",
+                      "example": "2021 CE"
+                    },
+                    "summit": {
+                      "type": "number",
+                      "example": 2745
+                    },
+                    "elevation": {
+                      "type": "number",
+                      "example": 9006
+                    },
+                    "latitude": {
+                      "type": "string",
+                      "example": "-53.1060"
+                    },
+                    "longitude": {
+                      "type": "string",
+                      "example": "73.5130"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing country path parameter. Click on 'Schema' below to see the possible error responses.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/MissingCountryParameterVolcanoes"
+                    },
+                    {
+                      "$ref": "#/components/schemas/NoVolcanoesInCountry"
+                    },
+                    {
+                      "$ref": "#/components/schemas/UnauthorizedQueryParameters"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Database process error. There may be error in the SQL query based on the inputs provided.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/InternalServerError"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/volcano/{id}": {
       "get": {
         "tags": ["Data"],
         "description": "Returns an object containing data for the queried volcano. If a valid JWT token is sent in the header of the request, population data for 5km, 10km, 30km and 100km is also provided. To test this using Swagger, click the green 'Authorize' button at the top of this page to enter your JWT token. A JWT token can be obtained by logging in. The path parameter (id) is required.",
@@ -665,116 +775,6 @@
                   "oneOf": [
                     {
                       "$ref": "#/components/schemas/VolcanoIdNotFound"
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/volcanoes/tallest/{country}": {
-      "get": {
-        "tags": ["Data"],
-        "description": "Returns details of the tallest volcano in a specified country. If the user is authenticated, additional details of the volcano will also be included in the response.",
-        "parameters": [
-          {
-            "name": "country",
-            "in": "path",
-            "description": "Name of country",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "A volcano object with all its related information.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "number",
-                      "example": 423
-                    },
-                    "name": {
-                      "type": "string",
-                      "example": "Heard"
-                    },
-                    "country": {
-                      "type": "string",
-                      "example": "Australia"
-                    },
-                    "region": {
-                      "type": "string",
-                      "example": "Middle East and Indian Ocean"
-                    },
-                    "subregion": {
-                      "type": "string",
-                      "example": "Indian Ocean (southern)"
-                    },
-                    "last_eruption": {
-                      "type": "string",
-                      "example": "2021 CE"
-                    },
-                    "summit": {
-                      "type": "number",
-                      "example": 2745
-                    },
-                    "elevation": {
-                      "type": "number",
-                      "example": 9006
-                    },
-                    "latitude": {
-                      "type": "string",
-                      "example": "-53.1060"
-                    },
-                    "longitude": {
-                      "type": "string",
-                      "example": "73.5130"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Missing country path parameter. Click on 'Schema' below to see the possible error responses.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/MissingCountryParameterVolcanoes"
-                    },
-                    {
-                      "$ref": "#/components/schemas/NoVolcanoesInCountry"
-                    },
-                    {
-                      "$ref": "#/components/schemas/UnauthorizedQueryParameters"
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Database process error. There may be error in the SQL query based on the inputs provided.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/InternalServerError"
                     }
                   ]
                 }

@@ -1,9 +1,5 @@
 const jwt = require('jsonwebtoken')
 
-// ken token:
-
-// newuser token: 
-
 const auth = (req, res, next) => {
     const authHeader = req.headers.authorization
 

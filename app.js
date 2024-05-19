@@ -1,7 +1,7 @@
 var path = require('path');
+const cors = require('cors')
 var logger = require('morgan');
 var express = require('express');
-var createError = require('http-errors');
 var cookieParser = require('cookie-parser');
 const swaggerUI = require('swagger-ui-express');
 const swaggerDocument = require('./docs/swagger.json');
@@ -12,7 +12,7 @@ const options = require("./knexfile.js");
 const knex = require("knex")(options);
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/users.js');
 
 var app = express();
 
@@ -20,11 +20,19 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.use(cors())
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// CORS 
+app.all('/*', (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
 
 // Swagger documentation 
 app.use('/', swaggerUI.serve)
